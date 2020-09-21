@@ -13,6 +13,35 @@ import ChatInput from './ChatInput';
 // then pass the data received from the server to other components to be
 // displayed
 class ChatApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { messages: []};
+
+    this.sendHandler = this.sendHandler.bind(this);
+
+    //we finally connect to server
+    this.socket = io(config.api).connect();
+
+    this.socket.on('server:message', message => {
+      this.addMessage(message);
+    });
+  }
+  addMessage(message) {
+    const messages = this.state.messages;
+    messages.push(message);
+    this.setState({ messages });
+  }
+  sendHandler(message) {
+    const messageObject = {
+    username: this.props.username,
+    message
+    };
+    // Emit the message to the server
+    this.socket.emit('client:message', messageObject);
+    messageObject.fromMe = true;
+    this.addMessage(messageObject);
+  }
+
   render() {
     return(
       <div>
