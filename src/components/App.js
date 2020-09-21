@@ -25,7 +25,6 @@ class App extends React.Component {
   }
   render() {
     if (this.state.submitted) {
-      console.log("submitted tru");
       return ( <ChatApp username={this.state.username} /> );
     }
     return (

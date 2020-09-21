@@ -14,7 +14,13 @@ import ChatInput from './ChatInput';
 // displayed
 class ChatApp extends React.Component {
   render() {
-    // Here we want to render the main chat application components
+    return(
+      <div>
+        <h2>Chat with your ride</h2>
+        <Messages messages={this.state.messages}/>
+        <ChatInput onSend={this.sendHandler}/>
+      </div>
+    );
   }
 
 }
